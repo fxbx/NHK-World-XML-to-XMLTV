@@ -13,7 +13,9 @@ import urllib.request
 # jsonInFile = 'all-json-example.json'
 jsonInFile = 'DownloadedJSON.json'
 # reference for later when pulling off the internet directly:
-JsonInURL = 'https://api.nhk.or.jp/nhkworld/epg/v6/world/all.json?apikey=EJfK8jdS57GqlupFgAfAAwr573q01y6k'
+#fxbx 7-20-2023 new authentication-less URL? replacing:
+#JsonInURL = 'https://api.nhk.or.jp/nhkworld/epg/v6/world/all.json?apikey=EJfK8jdS57GqlupFgAfAAwr573q01y6k'
+JsonInURL = "https://nwapi.nhk.jp/nhkworld/epg/v7b/world/all.json"
 XMLOutFile = 'ConvertedNHK.xml'
 
 # Import the .json from the URL
@@ -46,9 +48,11 @@ def indent(elem, level=0):
 
 
 # genres values come from NHK network under "genre" to become "category" in xmltv
+#fxbx 7-20-2023 New genres looked up from https://www3.nhk.or.jp/nhkworld/en/ondemand/category/:number
 genres = {None: "General",
           11: "News",
           12: "Current Affairs",
+          13: "Debate", #added
           14: "Biz/Tech",
           15: "Documentary",
           16: "Interview",
@@ -60,7 +64,13 @@ genres = {None: "General",
           22: "Pop Culture & Fashion",
           23: "Science & Nature",
           24: "Documentary",
-          25: "Sports"}
+          25: "Sports",
+          26: "Drama",
+          27: "Interactive",
+          28: "Learn Japanese",
+          29: "Disaster Preparedness",
+          30: "Kids", #fxbx: last cat as of 7-20-2023
+}
 
 # Start filling in the table XML tree with content that is useless and might not change
 root = xml.Element('tv')
